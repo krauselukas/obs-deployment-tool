@@ -1,0 +1,22 @@
+version: "2.1"
+
+services:
+  server:
+   build: docker-files/server
+   ports:
+    - "22:2222"
+   volumes: 
+     - ./docker-files/ssh-keys:/tmp/ssh-keys
+   entrypoint: /entrypoint.sh
+   command: "/usr/sbin/sshd -D"
+   depends_on:
+    - client
+  client:
+    build: docker-files/client
+    volumes: 
+      - ./docker-files/ssh-keys:/tmp/ssh-keys
+      - $PWD:/obs-deployment-tool
+    entrypoint: /entrypoint.sh
+    command: "/usr/bin/tail -f /dev/null"
+
+

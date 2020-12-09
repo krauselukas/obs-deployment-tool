@@ -30,6 +30,19 @@ Passing environment variables:
 
 ```$ mina -T```
 
+# How to run it in development
+
+```rake dev:build```
+
+```docker-compose up```
+
+```docker-compose exec client bash```
+
+In the client:
+
+```ssh root@server```
+
+the development tree can be found on the client container, /obs-deployment-tool
 
 ### How to contribute with code
 
