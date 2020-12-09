@@ -1,0 +1,8 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  UseCache: true
+  CacheRootDirectory: tmp/rubocop_cache_dir
+  MaxFilesInCache: 4000
+  Exclude:
+    - 'tmp/**/*'
