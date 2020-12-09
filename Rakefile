@@ -15,7 +15,7 @@ namespace :dev do
     FileUtils.cp File.join(ssh_keys_dir, 'id_rsa.pub'), File.join(ssh_keys_dir, 'authorized_keys')
   end
   desc 'build docker environment'
-  task build: :prepare do
+  task build: :create_keys do
     system('docker-compose build')
   end
   desc 'Destroy ssh keys for development'
