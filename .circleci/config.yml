@@ -17,9 +17,16 @@ jobs:
       - run:
           name: Bundle install
           command: bundle install
+      - restore_cache:
+          key: lint
       - run:
           name: Linters
           command: bundle exec rubocop --fail-fast --display-style-guide --fail-level convention
+      - save_cache:
+          key: lint-{{ epoch }}
+          paths:
+            - tmp/rubocop_cache_dir
+      - run: rm -rf tmp/rubocop*
       - run:
           name: Run spec
           command: bundle exec rake spec
