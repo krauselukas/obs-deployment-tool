@@ -2,10 +2,9 @@
 
 require 'shellwords'
 require 'bundler/setup'
-# require 'mina/rails'
 require 'mina/deploy'
 
-require 'obs_deploy'
+require_relative '../lib/obs_deploy'
 
 class PendingMigrationError < StandardError; end
 
