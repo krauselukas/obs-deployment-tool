@@ -35,7 +35,9 @@ RSpec.describe ObsDeploy::CheckDiff do
   end
 
   describe 'has_data_migration?' do
-    let(:diff_url) { "https://github.com/openSUSE/open-build-service/compare/#{running_commit}...#{package_commit}.diff" }
+    let(:diff_url) do
+      "https://github.com/openSUSE/open-build-service/compare/#{running_commit}...#{package_commit}.diff"
+    end
 
     before do
       allow(check_diff).to receive(:obs_running_commit).and_return(running_commit)
@@ -54,7 +56,10 @@ RSpec.describe ObsDeploy::CheckDiff do
 
   describe 'has_migration?' do
     context 'data is present' do
-      let(:diff_url) { "https://github.com/openSUSE/open-build-service/compare/#{running_commit}...#{package_commit}.diff" }
+      let(:diff_url) do
+        "https://github.com/openSUSE/open-build-service/compare/#{running_commit}...#{package_commit}.diff"
+      end
+
       before do
         allow(check_diff).to receive(:obs_running_commit).and_return(running_commit)
         allow(check_diff).to receive(:package_commit).and_return(package_commit)
@@ -89,7 +94,10 @@ RSpec.describe ObsDeploy::CheckDiff do
     subject { check_diff.migrations }
 
     context 'data is present' do
-      let(:diff_url) { "https://github.com/openSUSE/open-build-service/compare/#{running_commit}...#{package_commit}.diff" }
+      let(:diff_url) do
+        "https://github.com/openSUSE/open-build-service/compare/#{running_commit}...#{package_commit}.diff"
+      end
+
       before do
         allow(check_diff).to receive(:obs_running_commit).and_return(running_commit)
         allow(check_diff).to receive(:package_commit).and_return(package_commit)

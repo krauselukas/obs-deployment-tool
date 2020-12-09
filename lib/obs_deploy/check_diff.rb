@@ -22,7 +22,9 @@ module ObsDeploy
     end
 
     def github_diff
-      Net::HTTP.get(URI("https://github.com/openSUSE/open-build-service/compare/#{obs_running_commit}...#{package_commit}.diff"))
+      Net::HTTP.get(
+        URI("https://github.com/openSUSE/open-build-service/compare/#{obs_running_commit}...#{package_commit}.diff")
+      )
     end
 
     def has_migration?
