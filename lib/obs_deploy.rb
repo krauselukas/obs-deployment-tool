@@ -5,11 +5,11 @@ require 'net/http'
 require 'logger'
 
 require 'nokogiri'
-require 'obs_deploy/version'
-require 'obs_deploy/check_diff'
-require 'obs_deploy/zypper'
-require 'obs_deploy/systemctl'
-require 'obs_deploy/apache_sysconfig'
+require_relative 'obs_deploy/version'
+require_relative 'obs_deploy/check_diff'
+require_relative 'obs_deploy/zypper'
+require_relative 'obs_deploy/systemctl'
+require_relative 'obs_deploy/apache_sysconfig'
 require 'tempfile'
 
 module ObsDeploy

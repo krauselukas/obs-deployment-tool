@@ -45,7 +45,16 @@ In the client:
 
 ```ssh root@server```
 
-the development tree can be found on the client container, /obs-deployment-tool
+The development tree can be found on the client container
+`/obs-deployment-tool`, so it's possible to do:
+
+
+```cd /obs-deployment-tool```
+
+```bundle install```
+
+```mina -T```
+
 
 ### How to contribute with code
 
