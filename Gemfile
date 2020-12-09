@@ -3,8 +3,8 @@
 source 'https://rubygems.org'
 
 gem 'mina'
-gem 'rspec'
 gem 'nokogiri'
-gem 'webmock'
-gem 'rubocop'
 gem 'pry'
+gem 'rspec'
+gem 'rubocop'
+gem 'webmock'
