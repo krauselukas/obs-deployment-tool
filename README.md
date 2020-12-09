@@ -1,6 +1,9 @@
-# OBS deploy tool
+# obs-deployment-tool
 
-This repository contains the [mina]("https://github.com/mina/mina-deploy") script to deploy `obs-api` to our reference server
+[![CircleCI](https://circleci.com/gh/openSUSE/obs-deployment-tool.svg?style=svg)](https://app.circleci.com/pipelines/github/openSUSE/obs-deployment-tool)
+[![codebeat badge](https://codebeat.co/badges/a739bfce-3e90-4d09-8e4e-85e3653e2444)](https://codebeat.co/projects/github-com-opensuse-obs-deployment-tool-main)
+
+This repository contains the [mina]("https://github.com/mina/mina-deploy") script to deploy our reference server
 
 ### Features
 
@@ -46,4 +49,4 @@ the development tree can be found on the client container, /obs-deployment-tool
 
 ### How to contribute with code
 
-The commands are implemented in the gem [obs_deploy](https://github.com/vpereira/obs_deploy)
+Fork the repository and send a pull request with your changes.
