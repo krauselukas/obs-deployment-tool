@@ -1,7 +1,7 @@
 FROM opensuse/tumbleweed
 
 RUN zypper --gpg-auto-import-keys refresh
-RUN zypper install -y openssh vim iputils openssh-common
+RUN zypper install -y openssh vim iputils openssh-common screen
 
 RUN /usr/bin/ssh-keygen -A
 RUN mkdir -p /srv/www/obs/api/
