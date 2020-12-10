@@ -28,9 +28,7 @@ set :systemctl, ObsDeploy::Systemctl.new
 namespace :dependencies do
   namespace :migration do
     task :check do
-      run(:local) do
-        raise ::PendingMigrationError, 'pending migration' if fetch(:check_diff).pending_migration?
-      end
+      raise ::PendingMigrationError, 'pending migration' if fetch(:check_diff).pending_migration?
     end
   end
 end
@@ -44,14 +42,12 @@ namespace :obs do
         puts 'No pending migration'
       rescue ::PendingMigrationError
         puts 'Pending migrations:'
-        invoke :show
+        invoke 'obs:migration:show'
       end
     end
     desc 'show pending migrations'
     task :show do
-      run(:local) do
-        puts "Migrations: #{fetch(:check_diff).migrations}"
-      end
+      puts "Migrations: #{fetch(:check_diff).migrations}"
     end
   end
 
@@ -93,48 +89,46 @@ namespace :systemd do
     end
   end
 end
-# This task is the environment that is loaded for all remote run commands,
-#  such as
-# `mina deploy` or `mina rake`.
-task :remote_environment do
-  # If you're using rbenv, use this to load the rbenv environment.
-  # Be sure to commit your .ruby-version or .rbenv-version to your repository.
-  # invoke :'rbenv:load'
-
-  # For those using RVM, use this to load an RVM version@gemset.
-  # invoke :'rvm:use', 'ruby-1.9.3-p125@default'
-end
 
 namespace :zypper do
   desc 'refresh repositories'
   task :refresh do
-    command Shellwords.join(fetch(:zypper).refresh)
+    run(:remote) do
+      command Shellwords.join(fetch(:zypper).refresh)
+    end
   end
   task update: :refresh do
-    command Shellwords.join(fetch(:zypper).update)
+    run(:remote) do
+      command Shellwords.join(fetch(:zypper).update)
+    end
   end
 end
 
 desc 'Deploys without pending migrations'
 task deploy: 'dependencies:migration:check' do
   invoke 'zypper:update'
-  # invoke 'obs:package:installed'
+  invoke 'obs:package:installed'
 end
 
 desc 'Deploy with pending migration'
 task :deploy_with_migration do
   begin
+    # rubocop:disable Lint/UnreachableCode
+    raise NotImplementedError, 'Working in progress'
     invoke 'dependencies:migration:check'
+    # rubocop:enable Lint/UnreachableCode
   rescue PendingMigrationError
     invoke 'zypper:update'
     apache_sysconfig = fetch(:apache_sysconfig)
-    command Shellwords.join(apache_sysconfig.enable_maintenance_mode)
-    command Shellwords.join(fetch(:systemctl).restart_apache)
-    command 'run_in_api rails db:migrate'
-    command 'run_in_api rails db:migrate:with_data'
-    command Shellwords.join(apache_sysconfig.disable_maintenance_mode)
-    command Shellwords.join(fetch(:systemctl).restart_apache)
-    # basic test
+    run(:remote) do
+      command Shellwords.join(apache_sysconfig.enable_maintenance_mode)
+      command Shellwords.join(fetch(:systemctl).restart_apache)
+      command 'run_in_api rails db:migrate'
+      command 'run_in_api rails db:migrate:with_data'
+      command Shellwords.join(apache_sysconfig.disable_maintenance_mode)
+      command Shellwords.join(fetch(:systemctl).restart_apache)
+    end
+    basic test
     invoke 'obs:package:installed'
   end
 end
