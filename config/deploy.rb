@@ -3,6 +3,7 @@
 require 'shellwords'
 require 'bundler/setup'
 require 'mina/deploy'
+require 'octokit'
 
 require_relative '../lib/obs_deploy'
 
@@ -15,6 +16,8 @@ set :port, ENV['SSH_PORT'] || nil
 set :package_name, ENV['PACKAGE_NAME'] || 'obs-api'
 set :product, ENV['PRODUCT'] || 'SLE_12_SP4'
 set :deploy_to, ENV['DEPLOY_TO_DIR'] || '/srv/www/obs/api/'
+set :github_token, ENV['GITHUB_TOKEN'] || nil
+set :github_project, ENV['GITHUB_PROJECT'] || nil
 
 set :user, ENV['obs_user'] || 'root'
 set :check_diff, ObsDeploy::CheckDiff.new(product: fetch(:product))
@@ -36,6 +39,16 @@ namespace :dependencies do
 end
 
 namespace :obs do
+  namespace :test do
+    desc 'test task'
+    task :deployments do
+      client = Octokit::Client.new(:access_token => fetch(:github_token))
+      deployments = client.deployments(fetch(:github_project))
+
+      pp deployments
+    end
+  end
+
   namespace :migration do
     desc 'migration needed'
     task :check do
