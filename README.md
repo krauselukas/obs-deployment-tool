@@ -27,7 +27,7 @@ Passing environment variables:
 
 ### How to install it
 
-```$ git clone https://github.com/vpereira/obs-deploy```
+```$ git clone https://github.com/openSUSE/obs-deployment-tool.git```
 
 ```$ bundle install ```
 
