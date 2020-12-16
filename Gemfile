@@ -2,6 +2,7 @@
 
 source 'https://rubygems.org'
 
+gem 'activesupport'
 gem 'mina'
 gem 'nokogiri'
 gem 'octokit'

@@ -4,6 +4,7 @@
 # the API
 class GithubDeployment
   require 'octokit'
+  require 'active_support/core_ext/object/blank'
 
   def initialize(access_token:, repository: 'openSUSE/open-build-service', ref: 'master')
     @client = Octokit::Client.new(access_token: access_token)
@@ -14,11 +15,11 @@ class GithubDeployment
   def lock
     deployment = latest_deployment
 
-    return create_a_deployment_and_lock if deployment.nil?
+    return create_a_deployment_and_lock if deployment.blank?
 
     deployment_status = latest_deployment_status(deployment)
 
-    if deployment_status.nil?
+    if deployment_status.blank?
       puts "It can not be locked.\n\n"
       print_deployment_details(deployment)
       return
@@ -61,7 +62,7 @@ class GithubDeployment
   def print_deployment_status_details(deployment)
     deployment_status = latest_deployment_status(deployment)
 
-    if deployment_status.nil?
+    if deployment_status.blank?
       puts 'The current state of the deployment is pending'
       return
     end
@@ -74,7 +75,7 @@ class GithubDeployment
   def unlock
     deployment_status = latest_deployment_status(latest_deployment)
 
-    unless deployment_status.nil? || deployment_status.state == 'queued'
+    unless deployment_status.blank? || deployment_status.state == 'queued'
       puts 'Last deployment is not locked, nothing to do here'
       print_deployment_details(latest_deployment)
 
@@ -86,14 +87,14 @@ class GithubDeployment
   end
 
   def current
-    print_deployment_details(latest_deployment) unless latest_deployment.nil?
+    print_deployment_details(latest_deployment) unless latest_deployment.blank?
   end
 
   private
 
   def fetch_github_deployments
     @all_github_deployments ||= []
-    return @all_github_deployments unless @all_github_deployments.empty?
+    return @all_github_deployments unless @all_github_deployments.blank?
 
     begin
       @all_github_deployments = @client.deployments(@repository)
